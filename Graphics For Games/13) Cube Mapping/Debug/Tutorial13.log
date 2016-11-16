@@ -1,0 +1,21 @@
+﻿Build started 15/11/2016 11:43:55.
+     1>Project "D:\Documents\CSC8502 - Advanced Graphics for Games\Graphics Code 2015\GraphicsFramework\Graphics For Games\13) Cube Mapping\Tutorial13.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt Renderer.cpp
+         Renderer.cpp
+     1>d:\documents\csc8502 - advanced graphics for games\graphics code 2015\graphicsframework\nclgl\camera.h(61): warning C4305: 'initializing': truncation from 'double' to 'const float'
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\Documents\CSC8502 - Advanced Graphics for Games\Graphics Code 2015\GraphicsFramework\Graphics For Games\Debug\Tutorial 13 - Cube Mapping.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"D:\Documents\CSC8502 - Advanced Graphics for Games\Graphics Code 2015\GraphicsFramework\Graphics For Games\Debug\Tutorial 13 - Cube Mapping.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\Documents\CSC8502 - Advanced Graphics for Games\Graphics Code 2015\GraphicsFramework\Graphics For Games\Debug\Tutorial 13 - Cube Mapping.lib" /MACHINE:X86 Debug\Renderer.obj
+         Debug\Tutorial13.obj
+     1>Renderer.obj : warning LNK4049: locally defined symbol ___glewActiveTexture imported
+     1>Renderer.obj : warning LNK4049: locally defined symbol ___glewGetUniformLocation imported
+     1>Renderer.obj : warning LNK4049: locally defined symbol ___glewUniform1i imported
+     1>Renderer.obj : warning LNK4049: locally defined symbol ___glewUniform3fv imported
+     1>Renderer.obj : warning LNK4049: locally defined symbol ___glewUseProgram imported
+     1>glew32.lib(glew.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'glew32.lib(glew.obj)' or at 'D:\Documents\CSC8502 - Advanced Graphics for Games\Graphics Code 2015\GraphicsFramework\Graphics For Games\Debug\vc120.pdb'; linking object as if no debug info
+         Tutorial13.vcxproj -> D:\Documents\CSC8502 - Advanced Graphics for Games\Graphics Code 2015\GraphicsFramework\Graphics For Games\Debug\Tutorial 13 - Cube Mapping.exe
+     1>Done Building Project "D:\Documents\CSC8502 - Advanced Graphics for Games\Graphics Code 2015\GraphicsFramework\Graphics For Games\13) Cube Mapping\Tutorial13.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:01.04

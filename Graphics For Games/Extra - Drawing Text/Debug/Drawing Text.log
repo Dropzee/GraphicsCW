@@ -1,0 +1,55 @@
+﻿Build started 16/11/2016 12:09:50.
+     1>Project "D:\Documents\CSC8502 - Advanced Graphics for Games\Graphics Code 2015\GraphicsFramework\Graphics For Games\Extra - Drawing Text\Drawing Text.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt "Drawing Text.cpp"
+         Drawing Text.cpp
+     1>d:\documents\csc8502 - advanced graphics for games\graphics code 2015\graphicsframework\nclgl\camera.h(61): warning C4305: 'initializing' : truncation from 'double' to 'const float'
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\Documents\CSC8502 - Advanced Graphics for Games\Graphics Code 2015\GraphicsFramework\Graphics For Games\Debug\Extra - Drawing Text.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\Documents\CSC8502 - Advanced Graphics for Games\Graphics Code 2015\GraphicsFramework\Graphics For Games\Debug\Extra - Drawing Text.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\Documents\CSC8502 - Advanced Graphics for Games\Graphics Code 2015\GraphicsFramework\Graphics For Games\Debug\Extra - Drawing Text.lib" /MACHINE:X86 "Debug\Drawing Text.obj"
+         Debug\Renderer.obj
+         Debug\TextMesh.obj
+     1>nclgl.lib(Matrix4.obj) : error LNK2038: mismatch detected for '_MSC_VER': value '1900' doesn't match value '1800' in Drawing Text.obj
+     1>nclgl.lib(OGLRenderer.obj) : error LNK2038: mismatch detected for '_MSC_VER': value '1900' doesn't match value '1800' in Drawing Text.obj
+     1>nclgl.lib(OGLRenderer.obj) : error LNK2005: "public: __thiscall std::_Container_base12::_Container_base12(void)" (??0_Container_base12@std@@QAE@XZ) already defined in msvcprtd.lib(MSVCP120D.dll)
+     1>nclgl.lib(OGLRenderer.obj) : error LNK2005: "public: __thiscall std::_Container_base12::~_Container_base12(void)" (??1_Container_base12@std@@QAE@XZ) already defined in msvcprtd.lib(MSVCP120D.dll)
+     1>nclgl.lib(OGLRenderer.obj) : error LNK2005: "public: void __thiscall std::_Container_base12::_Orphan_all(void)" (?_Orphan_all@_Container_base12@std@@QAEXXZ) already defined in msvcprtd.lib(MSVCP120D.dll)
+     1>nclgl.lib(Window.obj) : error LNK2038: mismatch detected for '_MSC_VER': value '1900' doesn't match value '1800' in Drawing Text.obj
+     1>nclgl.lib(Window.obj) : error LNK2005: "public: __thiscall std::_Container_base12::~_Container_base12(void)" (??1_Container_base12@std@@QAE@XZ) already defined in msvcprtd.lib(MSVCP120D.dll)
+     1>nclgl.lib(Window.obj) : error LNK2005: "public: void __thiscall std::_Container_base12::_Orphan_all(void)" (?_Orphan_all@_Container_base12@std@@QAEXXZ) already defined in msvcprtd.lib(MSVCP120D.dll)
+     1>nclgl.lib(Shader.obj) : error LNK2038: mismatch detected for '_MSC_VER': value '1900' doesn't match value '1800' in Drawing Text.obj
+     1>nclgl.lib(Shader.obj) : error LNK2005: "public: __thiscall std::_Container_base12::_Container_base12(void)" (??0_Container_base12@std@@QAE@XZ) already defined in msvcprtd.lib(MSVCP120D.dll)
+     1>nclgl.lib(Shader.obj) : error LNK2005: "public: __thiscall std::_Container_base12::~_Container_base12(void)" (??1_Container_base12@std@@QAE@XZ) already defined in msvcprtd.lib(MSVCP120D.dll)
+     1>nclgl.lib(Shader.obj) : error LNK2005: "public: void __thiscall std::_Container_base12::_Orphan_all(void)" (?_Orphan_all@_Container_base12@std@@QAEXXZ) already defined in msvcprtd.lib(MSVCP120D.dll)
+     1>nclgl.lib(Camera.obj) : error LNK2038: mismatch detected for '_MSC_VER': value '1900' doesn't match value '1800' in Drawing Text.obj
+     1>nclgl.lib(Mesh.obj) : error LNK2038: mismatch detected for '_MSC_VER': value '1900' doesn't match value '1800' in Drawing Text.obj
+     1>nclgl.lib(Mouse.obj) : error LNK2038: mismatch detected for '_MSC_VER': value '1900' doesn't match value '1800' in Drawing Text.obj
+     1>Renderer.obj : warning LNK4049: locally defined symbol ___glewGetUniformLocation imported
+     1>Renderer.obj : warning LNK4049: locally defined symbol ___glewUniform1i imported
+     1>Renderer.obj : warning LNK4049: locally defined symbol ___glewUseProgram imported
+     1>nclgl.lib(OGLRenderer.obj) : error LNK2019: unresolved external symbol "void __cdecl operator delete(void *,unsigned int)" (??3@YAXPAXI@Z) referenced in function __unwindfunclet$??0OGLRenderer@@QAE@AAVWindow@@@Z$4
+     1>nclgl.lib(Window.obj) : error LNK2001: unresolved external symbol "void __cdecl operator delete(void *,unsigned int)" (??3@YAXPAXI@Z)
+     1>nclgl.lib(Shader.obj) : error LNK2001: unresolved external symbol "void __cdecl operator delete(void *,unsigned int)" (??3@YAXPAXI@Z)
+     1>nclgl.lib(Mesh.obj) : error LNK2001: unresolved external symbol "void __cdecl operator delete(void *,unsigned int)" (??3@YAXPAXI@Z)
+     1>nclgl.lib(OGLRenderer.obj) : error LNK2019: unresolved external symbol __Init_thread_header referenced in function "protected: void __thiscall OGLRenderer::DrawDebugOrtho(class Matrix4 *)" (?DrawDebugOrtho@OGLRenderer@@IAEXPAVMatrix4@@@Z)
+     1>nclgl.lib(OGLRenderer.obj) : error LNK2019: unresolved external symbol __Init_thread_abort referenced in function __unwindfunclet$?DrawDebugOrtho@OGLRenderer@@IAEXPAVMatrix4@@@Z$0
+     1>nclgl.lib(OGLRenderer.obj) : error LNK2019: unresolved external symbol __Init_thread_footer referenced in function "protected: void __thiscall OGLRenderer::DrawDebugOrtho(class Matrix4 *)" (?DrawDebugOrtho@OGLRenderer@@IAEXPAVMatrix4@@@Z)
+     1>nclgl.lib(OGLRenderer.obj) : error LNK2001: unresolved external symbol __Init_thread_epoch
+     1>nclgl.lib(Window.obj) : error LNK2019: unresolved external symbol __imp____acrt_iob_func referenced in function "public: __thiscall Window::Window(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,int,int,bool)" (??0Window@@QAE@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@HH_N@Z)
+     1>nclgl.lib(Shader.obj) : error LNK2019: unresolved external symbol __imp___invalid_parameter_noinfo referenced in function _memcpy_s
+     1>nclgl.lib(Shader.obj) : error LNK2019: unresolved external symbol __imp___get_stream_buffer_pointers referenced in function "protected: void __thiscall std::basic_filebuf<char,struct std::char_traits<char> >::_Init(struct _iobuf *,enum std::basic_filebuf<char,struct std::char_traits<char> >::_Initfl)" (?_Init@?$basic_filebuf@DU?$char_traits@D@std@@@std@@IAEXPAU_iobuf@@W4_Initfl@12@@Z)
+     1>nclgl.lib(Shader.obj) : error LNK2019: unresolved external symbol __imp____std_exception_copy referenced in function "public: __thiscall std::exception::exception(class std::exception const &)" (??0exception@std@@QAE@ABV01@@Z)
+     1>nclgl.lib(Shader.obj) : error LNK2019: unresolved external symbol __imp____std_exception_destroy referenced in function "public: virtual __thiscall std::exception::~exception(void)" (??1exception@std@@UAE@XZ)
+     1>nclgl.lib(Shader.obj) : error LNK2019: unresolved external symbol "__declspec(dllimport) public: int __thiscall std::codecvt<char,char,struct _Mbstatet>::in(struct _Mbstatet &,char const *,char const *,char const * &,char *,char *,char * &)const " (__imp_?in@?$codecvt@DDU_Mbstatet@@@std@@QBEHAAU_Mbstatet@@PBD1AAPBDPAD3AAPAD@Z) referenced in function "protected: virtual int __thiscall std::basic_filebuf<char,struct std::char_traits<char> >::uflow(void)" (?uflow@?$basic_filebuf@DU?$char_traits@D@std@@@std@@MAEHXZ)
+     1>nclgl.lib(Shader.obj) : error LNK2019: unresolved external symbol "__declspec(dllimport) public: int __thiscall std::codecvt<char,char,struct _Mbstatet>::out(struct _Mbstatet &,char const *,char const *,char const * &,char *,char *,char * &)const " (__imp_?out@?$codecvt@DDU_Mbstatet@@@std@@QBEHAAU_Mbstatet@@PBD1AAPBDPAD3AAPAD@Z) referenced in function "protected: virtual int __thiscall std::basic_filebuf<char,struct std::char_traits<char> >::overflow(int)" (?overflow@?$basic_filebuf@DU?$char_traits@D@std@@@std@@MAEHH@Z)
+     1>nclgl.lib(Shader.obj) : error LNK2019: unresolved external symbol "__declspec(dllimport) public: int __thiscall std::codecvt<char,char,struct _Mbstatet>::unshift(struct _Mbstatet &,char *,char *,char * &)const " (__imp_?unshift@?$codecvt@DDU_Mbstatet@@@std@@QBEHAAU_Mbstatet@@PAD1AAPAD@Z) referenced in function "protected: bool __thiscall std::basic_filebuf<char,struct std::char_traits<char> >::_Endwrite(void)" (?_Endwrite@?$basic_filebuf@DU?$char_traits@D@std@@@std@@IAE_NXZ)
+     1>nclgl.lib(Shader.obj) : error LNK2019: unresolved external symbol "__declspec(dllimport) public: static unsigned int __cdecl std::codecvt<char,char,struct _Mbstatet>::_Getcat(class std::locale::facet const * *,class std::locale const *)" (__imp_?_Getcat@?$codecvt@DDU_Mbstatet@@@std@@SAIPAPBVfacet@locale@2@PBV42@@Z) referenced in function "class std::codecvt<char,char,struct _Mbstatet> const & __cdecl std::use_facet<class std::codecvt<char,char,struct _Mbstatet> >(class std::locale const &)" (??$use_facet@V?$codecvt@DDU_Mbstatet@@@std@@@std@@YAABV?$codecvt@DDU_Mbstatet@@@0@ABVlocale@0@@Z)
+     1>nclgl.lib(Shader.obj) : error LNK2001: unresolved external symbol "__declspec(dllimport) public: static class std::locale::id std::codecvt<char,char,struct _Mbstatet>::id" (__imp_?id@?$codecvt@DDU_Mbstatet@@@std@@2V0locale@2@A)
+     1>nclgl.lib(Mesh.obj) : error LNK2019: unresolved external symbol "void __stdcall `eh vector constructor iterator'(void *,unsigned int,unsigned int,void (__thiscall*)(void *),void (__thiscall*)(void *))" (??_L@YGXPAXIIP6EX0@Z1@Z) referenced in function "protected: void __thiscall Mesh::GenerateNormals(void)" (?GenerateNormals@Mesh@@IAEXXZ)
+     1>nclgl.lib(Mesh.obj) : error LNK2019: unresolved external symbol "void __stdcall `eh vector destructor iterator'(void *,unsigned int,unsigned int,void (__thiscall*)(void *))" (??_M@YGXPAXIIP6EX0@Z@Z) referenced in function "public: void * __thiscall Vector2::`vector deleting destructor'(unsigned int)" (??_EVector2@@QAEPAXI@Z)
+     1>nclgl.lib(Mesh.obj) : error LNK2019: unresolved external symbol "void __cdecl operator delete[](void *,unsigned int)" (??_V@YAXPAXI@Z) referenced in function "public: void * __thiscall Vector2::`vector deleting destructor'(unsigned int)" (??_EVector2@@QAEPAXI@Z)
+     1>D:\Documents\CSC8502 - Advanced Graphics for Games\Graphics Code 2015\GraphicsFramework\Graphics For Games\Debug\Extra - Drawing Text.exe : fatal error LNK1120: 18 unresolved externals
+     1>Done Building Project "D:\Documents\CSC8502 - Advanced Graphics for Games\Graphics Code 2015\GraphicsFramework\Graphics For Games\Extra - Drawing Text\Drawing Text.vcxproj" (Build target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:00.81
