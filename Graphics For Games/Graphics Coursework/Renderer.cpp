@@ -2,7 +2,7 @@
 
 Renderer::Renderer(Window & parent) : OGLRenderer(parent) {
 	camera = new Camera();
-	heightMap = new HeightMap(TEXTUREDIR"terrain.raw");
+	heightMap = new HeightMap(TEXTUREDIR"test.png");
 	quad = Mesh::GenerateQuad();
 
 	camera->SetPosition(Vector3(RAW_WIDTH * HEIGHTMAP_X / 2.0f,
@@ -97,7 +97,6 @@ void Renderer::RenderScene() {
 	DrawSkybox();
 	DrawHeightmap();
 	DrawLava();
-
 
 	SwapBuffers();
 }

@@ -1,16 +1,16 @@
-﻿Build started 16/11/2016 12:10:38.
-     1>Project "D:\Documents\CSC8502 - Advanced Graphics for Games\Graphics Code 2015\GraphicsFramework\Graphics For Games\Extra - Geometry Shaders\Geometry.vcxproj" on node 2 (Build target(s)).
+﻿Build started 21/11/2016 15:49:06.
+     1>Project "D:\Documents\CSC8502 - Advanced Graphics for Games\Graphics Code 2015 (CW)\GraphicsCW\Graphics For Games\Extra - Geometry Shaders\Geometry.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt ParticleEmitter.cpp Renderer.cpp "Geometry Shaders.cpp"
          Geometry Shaders.cpp
-     1>d:\documents\csc8502 - advanced graphics for games\graphics code 2015\graphicsframework\nclgl\camera.h(61): warning C4305: 'initializing' : truncation from 'double' to 'const float'
+     1>d:\documents\csc8502 - advanced graphics for games\graphics code 2015 (cw)\graphicscw\nclgl\camera.h(61): warning C4305: 'initializing' : truncation from 'double' to 'const float'
          Renderer.cpp
-     1>d:\documents\csc8502 - advanced graphics for games\graphics code 2015\graphicsframework\nclgl\camera.h(61): warning C4305: 'initializing' : truncation from 'double' to 'const float'
-     1>d:\documents\csc8502 - advanced graphics for games\graphics code 2015\graphicsframework\graphics for games\extra - geometry shaders\renderer.cpp(45): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>d:\documents\csc8502 - advanced graphics for games\graphics code 2015 (cw)\graphicscw\nclgl\camera.h(61): warning C4305: 'initializing' : truncation from 'double' to 'const float'
+     1>d:\documents\csc8502 - advanced graphics for games\graphics code 2015 (cw)\graphicscw\graphics for games\extra - geometry shaders\renderer.cpp(45): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
          ParticleEmitter.cpp
          Generating Code...
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\Documents\CSC8502 - Advanced Graphics for Games\Graphics Code 2015\GraphicsFramework\Graphics For Games\Debug\Extra - Geometry Shaders.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\Documents\CSC8502 - Advanced Graphics for Games\Graphics Code 2015\GraphicsFramework\Graphics For Games\Debug\Extra - Geometry Shaders.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\Documents\CSC8502 - Advanced Graphics for Games\Graphics Code 2015\GraphicsFramework\Graphics For Games\Debug\Extra - Geometry Shaders.lib" /MACHINE:X86 Debug\ParticleEmitter.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\Documents\CSC8502 - Advanced Graphics for Games\Graphics Code 2015 (CW)\GraphicsCW\Graphics For Games\Debug\Extra - Geometry Shaders.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\Documents\CSC8502 - Advanced Graphics for Games\Graphics Code 2015 (CW)\GraphicsCW\Graphics For Games\Debug\Extra - Geometry Shaders.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\Documents\CSC8502 - Advanced Graphics for Games\Graphics Code 2015 (CW)\GraphicsCW\Graphics For Games\Debug\Extra - Geometry Shaders.lib" /MACHINE:X86 Debug\ParticleEmitter.obj
          Debug\Renderer.obj
          "Debug\Geometry Shaders.obj"
      1>nclgl.lib(Matrix4.obj) : error LNK2038: mismatch detected for '_MSC_VER': value '1900' doesn't match value '1800' in ParticleEmitter.obj
@@ -63,9 +63,9 @@
      1>nclgl.lib(OGLRenderer.obj) : error LNK2019: unresolved external symbol __Init_thread_footer referenced in function "protected: void __thiscall OGLRenderer::DrawDebugOrtho(class Matrix4 *)" (?DrawDebugOrtho@OGLRenderer@@IAEXPAVMatrix4@@@Z)
      1>nclgl.lib(OGLRenderer.obj) : error LNK2001: unresolved external symbol __Init_thread_epoch
      1>nclgl.lib(Window.obj) : error LNK2019: unresolved external symbol __imp____acrt_iob_func referenced in function "public: __thiscall Window::Window(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,int,int,bool)" (??0Window@@QAE@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@HH_N@Z)
-     1>D:\Documents\CSC8502 - Advanced Graphics for Games\Graphics Code 2015\GraphicsFramework\Graphics For Games\Debug\Extra - Geometry Shaders.exe : fatal error LNK1120: 18 unresolved externals
-     1>Done Building Project "D:\Documents\CSC8502 - Advanced Graphics for Games\Graphics Code 2015\GraphicsFramework\Graphics For Games\Extra - Geometry Shaders\Geometry.vcxproj" (Build target(s)) -- FAILED.
+     1>D:\Documents\CSC8502 - Advanced Graphics for Games\Graphics Code 2015 (CW)\GraphicsCW\Graphics For Games\Debug\Extra - Geometry Shaders.exe : fatal error LNK1120: 18 unresolved externals
+     1>Done Building Project "D:\Documents\CSC8502 - Advanced Graphics for Games\Graphics Code 2015 (CW)\GraphicsCW\Graphics For Games\Extra - Geometry Shaders\Geometry.vcxproj" (Build target(s)) -- FAILED.
 
 Build FAILED.
 
-Time Elapsed 00:00:01.84
+Time Elapsed 00:00:03.61
