@@ -6,8 +6,8 @@
 class Light {
 public:
 	Light() {
-		this->position = Vector3(0,0,0);
-		this->colour = Vector4(0,0,0,1);
+		this->position = Vector3();
+		this->colour = Vector4();
 		this->radius = 0;
 	}
 
