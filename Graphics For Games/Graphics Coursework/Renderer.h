@@ -33,9 +33,10 @@ protected:
 	Camera * camera;
 
 	GLuint cubeMap;
-	GLuint cubeMap2;
 
 	void	SetShaderParticleSize(float f);
 
 	ParticleEmitter*	emitter;
+
+	bool explosion;
 };

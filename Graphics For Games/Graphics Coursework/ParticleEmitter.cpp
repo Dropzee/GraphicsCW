@@ -138,7 +138,7 @@ Particle* ParticleEmitter::GetFreeParticle() {
 	p->direction.Normalise();	//Keep its direction normalised!
 	
 	//p->position.ToZero();
-	p->position = position + Vector3(rand() % 2001, 0, rand() % 2001);
+	p->position = position + Vector3((rand() % 5001)-2500, 0, (rand() % 5001)-2500);
 
 	return p;	//return the new particle :-)
 }

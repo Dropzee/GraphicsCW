@@ -4,7 +4,7 @@ Renderer::Renderer(Window & parent) : OGLRenderer(parent) {
 	camera = new Camera();
 	heightMap = new HeightMap(TEXTUREDIR"terrain.raw");
 	quad = Mesh::GenerateQuad();
-	emitter = new ParticleEmitter(Vector3(3000,0,3000));
+	emitter = new ParticleEmitter(Vector3(1000,100,1000));
 
 	camera->SetPosition(Vector3(RAW_WIDTH * HEIGHTMAP_X / 2.0f,
 		500.0f, RAW_WIDTH * HEIGHTMAP_X));
@@ -44,29 +44,13 @@ Renderer::Renderer(Window & parent) : OGLRenderer(parent) {
 		TEXTUREDIR"Barren RedsDOT3.JPG", SOIL_LOAD_AUTO,
 		SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS));*/
 
-	/*cubeMap = SOIL_load_OGL_cubemap(
-		TEXTUREDIR"left.jpg", TEXTUREDIR"right.jpg",
-		TEXTUREDIR"top.jpg", TEXTUREDIR"bot.jpg",
-		TEXTUREDIR"back.jpg", TEXTUREDIR"front.jpg",
-		SOIL_LOAD_RGB,
-		SOIL_CREATE_NEW_ID, 0
-		);*/
-
 	cubeMap = SOIL_load_OGL_cubemap(
-		TEXTUREDIR"/box1/violentdays_lf.png", TEXTUREDIR"/box1/violentdays_rt.png",
-		TEXTUREDIR"/box1/violentdays_up.png", TEXTUREDIR"/box1/violentdays_dn.png",
-		TEXTUREDIR"/box1/violentdays_ft.png", TEXTUREDIR"/box1/violentdays_bk2.png",
-		SOIL_LOAD_RGB,
-		SOIL_CREATE_NEW_ID, 0
-		);
-
-	/*cubeMap2 = SOIL_load_OGL_cubemap(
 		TEXTUREDIR"/box1/violentdays_lf.png", TEXTUREDIR"/box1/violentdays_rt.png",
 		TEXTUREDIR"/box1/violentdays_up.png", TEXTUREDIR"/box1/violentdays_dn.png",
 		TEXTUREDIR"/box1/violentdays_ft.png", TEXTUREDIR"/box1/violentdays_bk.png",
 		SOIL_LOAD_RGB,
 		SOIL_CREATE_NEW_ID, 0
-		);*/
+		);
 
 	if (!cubeMap || !quad->GetTexture() || !heightMap->GetTexture() /* ||
 		!heightMap->GetBumpMap()*/) {
@@ -92,6 +76,8 @@ Renderer::Renderer(Window & parent) : OGLRenderer(parent) {
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnable(GL_TEXTURE_CUBE_MAP_SEAMLESS);
+
+	explosion = false;
 }
 
 Renderer ::~Renderer(void) {
@@ -109,6 +95,17 @@ void Renderer::UpdateScene(float msec) {
 	emitter->Update(msec);
 	camera->UpdateCamera(msec);
 	viewMatrix = camera->BuildViewMatrix();
+
+	if(Window::GetKeyboard()->KeyTriggered(KEYBOARD_X) && !explosion) {
+		explosion = true;
+		cubeMap = SOIL_load_OGL_cubemap(
+			TEXTUREDIR"/box1/violentdays_lf.png", TEXTUREDIR"/box1/violentdays_rt.png",
+			TEXTUREDIR"/box1/violentdays_up.png", TEXTUREDIR"/box1/violentdays_dn.png",
+			TEXTUREDIR"/box1/violentdays_ft.png", TEXTUREDIR"/box1/violentdays_bk2.png",
+			SOIL_LOAD_RGB,
+			SOIL_CREATE_NEW_ID, 0
+			);
+	}
 }
 
 
@@ -206,11 +203,11 @@ void Renderer::DrawEmitter() {
 	glUniform1i(glGetUniformLocation(currentShader->GetProgram(), "diffuseTex"), 0);
 
 	SetShaderParticleSize(emitter->GetParticleSize());
-	emitter->SetParticleSize(8.0f);
+	emitter->SetParticleSize(4.0f);
 	emitter->SetParticleVariance(1.0f);
-	emitter->SetLaunchParticles(16.0f);
+	emitter->SetLaunchParticles(100.0f);
 	emitter->SetParticleLifetime(2000.0f);
-	emitter->SetParticleSpeed(0.1f);
+	emitter->SetParticleSpeed(0.05f);
 	UpdateShaderMatrices();
 
 	emitter->Draw();

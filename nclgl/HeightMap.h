@@ -18,6 +18,5 @@
 class HeightMap : public Mesh {
 public:
 	HeightMap(std::string name);
-	HeightMap(float radius, int stacks, int slices);
 	~HeightMap(void) {};
 };
