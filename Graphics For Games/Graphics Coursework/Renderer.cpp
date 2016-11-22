@@ -2,8 +2,9 @@
 
 Renderer::Renderer(Window & parent) : OGLRenderer(parent) {
 	camera = new Camera();
-	heightMap = new HeightMap(TEXTUREDIR"test.png");
+	heightMap = new HeightMap(TEXTUREDIR"terrain.raw");
 	quad = Mesh::GenerateQuad();
+	emitter = new ParticleEmitter(Vector3(3000,0,3000));
 
 	camera->SetPosition(Vector3(RAW_WIDTH * HEIGHTMAP_X / 2.0f,
 		500.0f, RAW_WIDTH * HEIGHTMAP_X));
@@ -11,7 +12,7 @@ Renderer::Renderer(Window & parent) : OGLRenderer(parent) {
 	light = new Light(Vector3((RAW_HEIGHT * HEIGHTMAP_X / 2.0f), 500.0f,
 		(RAW_HEIGHT * HEIGHTMAP_Z / 2.0f)),
 		Vector4(0.9f, 0.9f, 1.0f, 1),
-		(RAW_WIDTH * HEIGHTMAP_X) /*/ 2.0f*/);
+		(RAW_WIDTH * HEIGHTMAP_X));
 
 	reflectShader = new Shader(SHADERDIR"PerPixelVertex.glsl",
 		SHADERDIR"reflectFragment.glsl");
@@ -19,9 +20,12 @@ Renderer::Renderer(Window & parent) : OGLRenderer(parent) {
 		SHADERDIR"skyboxFragment.glsl");
 	lightShader = new Shader(SHADERDIR"PerPixelVertex.glsl",
 		SHADERDIR"PerPixelFragment.glsl");
+	particleShader = new Shader(SHADERDIR"particleVertex.glsl",
+		SHADERDIR"particleFragment.glsl",
+		SHADERDIR"particleGeometry.glsl");
 
 	if (!reflectShader->LinkProgram() || !lightShader->LinkProgram() ||
-		!skyboxShader->LinkProgram()) {
+		!skyboxShader->LinkProgram() || !particleShader->LinkProgram()) {
 		return;
 	}
 
@@ -40,13 +44,29 @@ Renderer::Renderer(Window & parent) : OGLRenderer(parent) {
 		TEXTUREDIR"Barren RedsDOT3.JPG", SOIL_LOAD_AUTO,
 		SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS));*/
 
-	cubeMap = SOIL_load_OGL_cubemap(
+	/*cubeMap = SOIL_load_OGL_cubemap(
 		TEXTUREDIR"left.jpg", TEXTUREDIR"right.jpg",
 		TEXTUREDIR"top.jpg", TEXTUREDIR"bot.jpg",
 		TEXTUREDIR"back.jpg", TEXTUREDIR"front.jpg",
 		SOIL_LOAD_RGB,
 		SOIL_CREATE_NEW_ID, 0
+		);*/
+
+	cubeMap = SOIL_load_OGL_cubemap(
+		TEXTUREDIR"/box1/violentdays_lf.png", TEXTUREDIR"/box1/violentdays_rt.png",
+		TEXTUREDIR"/box1/violentdays_up.png", TEXTUREDIR"/box1/violentdays_dn.png",
+		TEXTUREDIR"/box1/violentdays_ft.png", TEXTUREDIR"/box1/violentdays_bk2.png",
+		SOIL_LOAD_RGB,
+		SOIL_CREATE_NEW_ID, 0
 		);
+
+	/*cubeMap2 = SOIL_load_OGL_cubemap(
+		TEXTUREDIR"/box1/violentdays_lf.png", TEXTUREDIR"/box1/violentdays_rt.png",
+		TEXTUREDIR"/box1/violentdays_up.png", TEXTUREDIR"/box1/violentdays_dn.png",
+		TEXTUREDIR"/box1/violentdays_ft.png", TEXTUREDIR"/box1/violentdays_bk.png",
+		SOIL_LOAD_RGB,
+		SOIL_CREATE_NEW_ID, 0
+		);*/
 
 	if (!cubeMap || !quad->GetTexture() || !heightMap->GetTexture() /* ||
 		!heightMap->GetBumpMap()*/) {
@@ -64,7 +84,6 @@ Renderer::Renderer(Window & parent) : OGLRenderer(parent) {
 	SetTextureRepeating(heightMap->GetTexture(), true);
 	SetTextureRepeating(heightMap->GetBumpMap(), true);
 	init = true;
-	waterRotate = 0.0f;
 
 	projMatrix = Matrix4::Perspective(1.0f, 15000.0f,
 		(float)width / (float)height, 45.0f);
@@ -83,20 +102,25 @@ Renderer ::~Renderer(void) {
 	delete skyboxShader;
 	delete lightShader;
 	delete light;
+	delete emitter;
 	currentShader = 0;
 }
 void Renderer::UpdateScene(float msec) {
+	emitter->Update(msec);
 	camera->UpdateCamera(msec);
 	viewMatrix = camera->BuildViewMatrix();
-	waterRotate += msec / 1000.0f;
 }
 
+
 void Renderer::RenderScene() {
+	glClearColor(0, 0, 0, 1);
 	glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 
+	
 	DrawSkybox();
 	DrawHeightmap();
 	DrawLava();
+	DrawEmitter();
 
 	SwapBuffers();
 }
@@ -113,6 +137,7 @@ void Renderer::DrawSkybox() {
 }
 
 void Renderer::DrawHeightmap() {
+
 	SetCurrentShader(lightShader);
 	SetShaderLight(*light);
 	glUniform3fv(glGetUniformLocation(currentShader->GetProgram(),
@@ -166,5 +191,35 @@ void Renderer::DrawLava() {
 	quad->Draw();
 
 	glUseProgram(0);
+}
+
+void Renderer::DrawEmitter() {
+	//glClearColor(0, 0, 0, 1);
+	//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	SetCurrentShader(particleShader);
+	SetShaderLight(*light);
+
+	modelMatrix.ToIdentity();
+	UpdateShaderMatrices();
+
+	glUniform1i(glGetUniformLocation(currentShader->GetProgram(), "diffuseTex"), 0);
+
+	SetShaderParticleSize(emitter->GetParticleSize());
+	emitter->SetParticleSize(8.0f);
+	emitter->SetParticleVariance(1.0f);
+	emitter->SetLaunchParticles(16.0f);
+	emitter->SetParticleLifetime(2000.0f);
+	emitter->SetParticleSpeed(0.1f);
+	UpdateShaderMatrices();
+
+	emitter->Draw();
+
+	glUseProgram(0);
+
+}
+
+void Renderer::SetShaderParticleSize(float f) {
+	glUniform1f(glGetUniformLocation(currentShader->GetProgram(), "particleSize"), f);
 }
 

@@ -4,6 +4,7 @@
 #include "../../nclgl/Camera.h"
 #include "../../nclgl/HeightMap.h"
 #include "../../nclgl//OBJMesh.h"
+#include "ParticleEmitter.h"
 
 class Renderer : public OGLRenderer {
 public:
@@ -17,10 +18,12 @@ protected:
 	void DrawHeightmap();
 	void DrawLava();
 	void DrawSkybox();
+	void DrawEmitter();
 
 	Shader * lightShader;
 	Shader * reflectShader;
 	Shader * skyboxShader;
+	Shader * particleShader;
 
 	HeightMap * heightMap;
 	Mesh * quad;
@@ -30,6 +33,9 @@ protected:
 	Camera * camera;
 
 	GLuint cubeMap;
+	GLuint cubeMap2;
 
-	float waterRotate;
+	void	SetShaderParticleSize(float f);
+
+	ParticleEmitter*	emitter;
 };
