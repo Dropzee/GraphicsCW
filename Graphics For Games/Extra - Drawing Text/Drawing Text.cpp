@@ -1,6 +1,8 @@
+#pragma comment(lib, "nclgl.lib")
+
 #include "../../nclgl/Window.h"
 #include "Renderer.h"
-#pragma comment(lib, "nclgl.lib")
+
 
 int main() {
 	Window w("Drawing Text!!", 800,600,false);

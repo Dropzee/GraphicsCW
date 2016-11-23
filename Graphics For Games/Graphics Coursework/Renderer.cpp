@@ -23,9 +23,12 @@ Renderer::Renderer(Window & parent) : OGLRenderer(parent) {
 	particleShader = new Shader(SHADERDIR"particleVertex.glsl",
 		SHADERDIR"particleFragment.glsl",
 		SHADERDIR"particleGeometry.glsl");
+	texShader = new Shader(SHADERDIR"TexturedVertex.glsl", 
+		SHADERDIR"TexturedFragment.glsl");
 
 	if (!reflectShader->LinkProgram() || !lightShader->LinkProgram() ||
-		!skyboxShader->LinkProgram() || !particleShader->LinkProgram()) {
+		!skyboxShader->LinkProgram() || !particleShader->LinkProgram() ||
+		!texShader->LinkProgram()) {
 		return;
 	}
 
@@ -50,9 +53,12 @@ Renderer::Renderer(Window & parent) : OGLRenderer(parent) {
 		TEXTUREDIR"/box1/violentdays_ft.png", TEXTUREDIR"/box1/violentdays_bk.png",
 		SOIL_LOAD_RGB,
 		SOIL_CREATE_NEW_ID, 0
-		);
+		);	
+	
+	basicFont = new Font(SOIL_load_OGL_texture(TEXTUREDIR"tahoma.tga", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_COMPRESS_TO_DXT), 16, 16);
+	prof = false;
 
-	if (!cubeMap || !quad->GetTexture() || !heightMap->GetTexture() /* ||
+	if (!cubeMap || !quad->GetTexture() || !heightMap->GetTexture()/* ||
 		!heightMap->GetBumpMap()*/) {
 		return;
 	}
@@ -64,6 +70,8 @@ Renderer::Renderer(Window & parent) : OGLRenderer(parent) {
 	//	TEXTUREDIR"lavaland.jpg", SOIL_LOAD_AUTO,
 	//	SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS));
 	
+	waterRotate = 0;
+
 	SetTextureRepeating(quad->GetTexture(), true);
 	SetTextureRepeating(heightMap->GetTexture(), true);
 	SetTextureRepeating(heightMap->GetBumpMap(), true);
@@ -87,6 +95,9 @@ Renderer ::~Renderer(void) {
 	delete reflectShader;
 	delete skyboxShader;
 	delete lightShader;
+	delete texShader;
+	delete particleShader;
+	delete basicFont;
 	delete light;
 	delete emitter;
 	currentShader = 0;
@@ -95,6 +106,15 @@ void Renderer::UpdateScene(float msec) {
 	emitter->Update(msec);
 	camera->UpdateCamera(msec);
 	viewMatrix = camera->BuildViewMatrix();
+	waterRotate += msec / 1000;
+
+	fps = 1000 / msec;
+	GetProcessMemoryInfo(GetCurrentProcess(), &pmc, sizeof(pmc));
+	memory = pmc.WorkingSetSize;
+
+	if (Window::GetKeyboard()->KeyTriggered(KEYBOARD_P)) {
+		prof = !prof;
+	}
 
 	if(Window::GetKeyboard()->KeyTriggered(KEYBOARD_X) && !explosion) {
 		explosion = true;
@@ -118,6 +138,10 @@ void Renderer::RenderScene() {
 	DrawHeightmap();
 	DrawLava();
 	DrawEmitter();
+
+	if (prof) {
+		Profile();
+	}
 
 	SwapBuffers();
 }
@@ -182,7 +206,7 @@ void Renderer::DrawLava() {
 		Matrix4::Rotation(90, Vector3(1.0f, 0.0f, 0.0f));
 
 	textureMatrix = Matrix4::Scale(Vector3(10.0f, 10.0f, 10.0f)) *
-		Matrix4::Rotation(/*waterRotate*/ 0 , Vector3(0.0f, 0.0f, 1.0f));
+		Matrix4::Translation(Vector3(0.0f, waterRotate*0.01, 1.0f));
 	UpdateShaderMatrices();
 
 	quad->Draw();
@@ -216,7 +240,55 @@ void Renderer::DrawEmitter() {
 
 }
 
+void Renderer::Profile() {
+
+	SetCurrentShader(texShader);
+
+												
+	glUniform1i(glGetUniformLocation(currentShader->GetProgram(), "diffuseTex"), 0);
+
+	modelMatrix.ToIdentity();
+	textureMatrix.ToIdentity();
+
+	DrawText("FPS: " + to_string(fps), Vector3(0, 0, 0), 16.0f);
+	DrawText("Memory Usage:" + to_string(memory / 1048576.0f) + "Mb", Vector3(0, 16, 0), 16.0f);
+
+	//DrawText("This is perspective text!!!!", Vector3(0, 0, -1000), 64.0f, true); //perspective
+
+	glUseProgram(0);
+
+	modelMatrix.ToIdentity();
+	projMatrix = Matrix4::Perspective(1.0f, 15000.0f,
+		(float)width / (float)height, 45.0f);
+	UpdateShaderMatrices();
+}
+
 void Renderer::SetShaderParticleSize(float f) {
 	glUniform1f(glGetUniformLocation(currentShader->GetProgram(), "particleSize"), f);
 }
 
+void Renderer::DrawText(const std::string &text, const Vector3 &position, const float size, const bool perspective) {
+	//Create a new temporary TextMesh, using our line of text and our font
+	TextMesh* mesh = new TextMesh(text, *basicFont);
+
+	//This just does simple matrix setup to render in either perspective or
+	//orthographic mode, there's nothing here that's particularly tricky.
+	if (perspective) {
+		modelMatrix = Matrix4::Translation(position) * Matrix4::Scale(Vector3(size, size, 1));
+		viewMatrix = camera->BuildViewMatrix();
+		projMatrix = Matrix4::Perspective(1.0f, 10000.0f, (float)width / (float)height, 45.0f);
+	}
+	else {
+		//In ortho mode, we subtract the y from the height, so that a height of 0
+		//is at the top left of the screen, which is more intuitive
+		//(for me anyway...)
+		modelMatrix = Matrix4::Translation(Vector3(position.x, height - position.y, position.z)) * Matrix4::Scale(Vector3(size, size, 1));
+		viewMatrix.ToIdentity();
+		projMatrix = Matrix4::Orthographic(-1.0f, 1.0f, (float)width, 0.0f, (float)height, 0.0f);
+	}
+	//Either way, we update the matrices, and draw the mesh
+	UpdateShaderMatrices();
+	mesh->Draw();
+
+	delete mesh; //Once it's drawn, we don't need it anymore!
+}

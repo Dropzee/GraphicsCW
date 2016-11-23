@@ -5,6 +5,9 @@
 #include "../../nclgl/HeightMap.h"
 #include "../../nclgl//OBJMesh.h"
 #include "ParticleEmitter.h"
+#include "TextMesh.h"
+#include <string>
+#include "psapi.h"
 
 class Renderer : public OGLRenderer {
 public:
@@ -14,20 +17,26 @@ public:
 	virtual void RenderScene();
 	virtual void UpdateScene(float msec);
 
+	void	DrawText(const std::string &text, const Vector3 &position, const float size = 10.0f, const bool perspective = false);
+
 protected:
 	void DrawHeightmap();
 	void DrawLava();
 	void DrawSkybox();
 	void DrawEmitter();
+	void Profile();
 
 	Shader * lightShader;
 	Shader * reflectShader;
 	Shader * skyboxShader;
 	Shader * particleShader;
+	Shader * texShader;
 
 	HeightMap * heightMap;
 	Mesh * quad;
 	//OBJMesh* rock;
+
+	float waterRotate;
 
 	Light * light;
 	Camera * camera;
@@ -39,4 +48,10 @@ protected:
 	ParticleEmitter*	emitter;
 
 	bool explosion;
+
+	bool prof;
+	Font*	basicFont;
+	float fps;
+	PROCESS_MEMORY_COUNTERS pmc;
+	SIZE_T memory;
 };
