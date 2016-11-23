@@ -4,7 +4,7 @@ Renderer::Renderer(Window & parent) : OGLRenderer(parent) {
 	camera = new Camera();
 	heightMap = new HeightMap(TEXTUREDIR"terrain.raw");
 	quad = Mesh::GenerateQuad();
-	emitter = new ParticleEmitter(Vector3(1000,100,1000));
+	emitter = new ParticleEmitter(Vector3(1000,110,1000));
 
 	camera->SetPosition(Vector3(RAW_WIDTH * HEIGHTMAP_X / 2.0f,
 		500.0f, RAW_WIDTH * HEIGHTMAP_X));
@@ -139,6 +139,8 @@ void Renderer::RenderScene() {
 	DrawLava();
 	DrawEmitter();
 
+	//Explode();
+
 	if (prof) {
 		Profile();
 	}
@@ -227,7 +229,7 @@ void Renderer::DrawEmitter() {
 	glUniform1i(glGetUniformLocation(currentShader->GetProgram(), "diffuseTex"), 0);
 
 	SetShaderParticleSize(emitter->GetParticleSize());
-	emitter->SetParticleSize(4.0f);
+	emitter->SetParticleSize(10.0f);
 	emitter->SetParticleVariance(1.0f);
 	emitter->SetLaunchParticles(100.0f);
 	emitter->SetParticleLifetime(2000.0f);
@@ -291,4 +293,26 @@ void Renderer::DrawText(const std::string &text, const Vector3 &position, const 
 	mesh->Draw();
 
 	delete mesh; //Once it's drawn, we don't need it anymore!
+}
+
+void Renderer::Explode() {
+
+	SetCurrentShader(lightShader);
+	SetShaderLight(*light);
+
+	glUniform3fv(glGetUniformLocation(currentShader->GetProgram(),
+		"cameraPos"), 1, (float *)& camera->GetPosition());
+
+	glUniform1i(glGetUniformLocation(currentShader->GetProgram(),
+		"diffuseTex"), 0);
+	glUniform1i(glGetUniformLocation(currentShader->GetProgram(),
+		"bumpTex"), 1);
+
+	modelMatrix = Matrix4::Translation(Vector3(0,0,0)) * Matrix4::Scale(Vector3(1, 1, 1));
+	viewMatrix.ToIdentity();
+	projMatrix = Matrix4::Orthographic(-1.0f, 1.0f, (float)width, 0.0f, (float)height, 0.0f);
+	UpdateShaderMatrices();
+	quad->Draw();
+
+	glUseProgram(0);
 }

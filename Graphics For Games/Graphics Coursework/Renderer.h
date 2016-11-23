@@ -25,6 +25,7 @@ protected:
 	void DrawSkybox();
 	void DrawEmitter();
 	void Profile();
+	void Explode();
 
 	Shader * lightShader;
 	Shader * reflectShader;

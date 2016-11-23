@@ -29,7 +29,7 @@ ParticleEmitter::ParticleEmitter(Vector3 pos) {
 	//texture = SOIL_load_OGL_texture("../Textures/particle.tga",
 	//SOIL_LOAD_AUTO,SOIL_CREATE_NEW_ID,SOIL_FLAG_COMPRESS_TO_DXT);
 
-	texture = SOIL_load_OGL_texture(TEXTUREDIR"diffus.tga",
+	texture = SOIL_load_OGL_texture(TEXTUREDIR"particle.tga",
 		SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_COMPRESS_TO_DXT);
 }
 
@@ -92,6 +92,8 @@ void ParticleEmitter::Update(float msec) {
 			//position by multiplying its normalised direction by the
 			//particle speed, and adding the result to the position. Easy!
 
+			p->direction.y -= 0.05;
+
 			p->position += p->direction*(msec*particleSpeed);
 
 
@@ -129,7 +131,7 @@ Particle* ParticleEmitter::GetFreeParticle() {
 	//free list, it'll still have the values of its 'previous life'
 
 	//p->colour = Vector4(RAND(), RAND(), RAND(), 1.0);
-	p->colour = Vector4(1, 0.45, 0.45, 1.0);
+	p->colour = Vector4(0.8, 0.4, 0, 1.0);
 	p->direction = initialDirection;
 	p->direction.x += ((RAND() - RAND()) * particleVariance);
 	p->direction.y += 1;
