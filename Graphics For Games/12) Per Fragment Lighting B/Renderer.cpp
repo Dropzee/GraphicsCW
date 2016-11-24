@@ -5,6 +5,7 @@ Renderer::Renderer(Window & parent) : OGLRenderer(parent) {
 		RAW_WIDTH * HEIGHTMAP_X / 2.0f, 500, RAW_HEIGHT * HEIGHTMAP_Z));
 
 	heightMap = new HeightMap(TEXTUREDIR"terrain.raw");
+	
 	currentShader = new Shader(SHADERDIR"BumpVertex.glsl",
 		SHADERDIR"BumpFragment.glsl");
 

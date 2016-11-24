@@ -3,8 +3,7 @@
 Renderer::Renderer(Window & parent) : OGLRenderer(parent) {
 	camera = new Camera();
 	heightMap = new HeightMap(TEXTUREDIR"terrain.raw");
-	quad = Mesh::GenerateQuad();
-	flash = Mesh::GenerateQuad();
+	lava = Mesh::GenerateQuad();
 	emitterBubble = new ParticleEmitter(Vector3(1000,110,1000), BUBBLE);
 	emitterExplode = new ParticleEmitter(Vector3(0, 0, 0), EXPLOSION);
 	emitterSteam = new ParticleEmitter(Vector3(1000, 110, 1000), STEAM);
@@ -19,8 +18,10 @@ Renderer::Renderer(Window & parent) : OGLRenderer(parent) {
 
 	basicShader = new Shader(SHADERDIR"basicVertex.glsl",
 		SHADERDIR"colourFragment.glsl");
-	reflectShader = new Shader(SHADERDIR"PerPixelVertex.glsl",
+	lavaShader = new Shader(SHADERDIR"PerPixelVertex.glsl",
 		SHADERDIR"reflectFragment.glsl");
+	/*lavaShader = new Shader(SHADERDIR"lavaVertex.glsl",
+		SHADERDIR"lavaFragment.glsl");*/
 	skyboxShader = new Shader(SHADERDIR"skyboxVertex.glsl",
 		SHADERDIR"skyboxFragment.glsl");
 	lightShader = new Shader(SHADERDIR"PerPixelVertex.glsl",
@@ -31,16 +32,17 @@ Renderer::Renderer(Window & parent) : OGLRenderer(parent) {
 	texShader = new Shader(SHADERDIR"TexturedVertex.glsl", 
 		SHADERDIR"TexturedFragment.glsl");
 
-	if (!reflectShader->LinkProgram() || !lightShader->LinkProgram() ||
+
+	if (!lavaShader->LinkProgram() || !lightShader->LinkProgram() ||
 		!skyboxShader->LinkProgram() || !particleShader->LinkProgram() ||
 		!texShader->LinkProgram() || !basicShader->LinkProgram()) {
 		return;
 	}
 
-	quad->SetTexture(SOIL_load_OGL_texture(TEXTUREDIR"diffus.tga",
+	lava->SetTexture(SOIL_load_OGL_texture(TEXTUREDIR"diffus.tga",
 		SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS));
 
-	quad->SetBumpMap(SOIL_load_OGL_texture(
+	lava->SetBumpMap(SOIL_load_OGL_texture(
 		TEXTUREDIR"normal.tga", SOIL_LOAD_AUTO,
 		SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS));
 
@@ -68,10 +70,12 @@ Renderer::Renderer(Window & parent) : OGLRenderer(parent) {
 		SOIL_CREATE_NEW_ID, 0
 		);
 
+	blend = 0.5;
+
 	basicFont = new Font(SOIL_load_OGL_texture(TEXTUREDIR"tahoma.tga", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_COMPRESS_TO_DXT), 16, 16);
 	prof = false;
 
-	if (!cubeMap || !quad->GetTexture() || !heightMap->GetTexture()/* ||
+	if (!cubeMap || !lava->GetTexture() || !heightMap->GetTexture() || !lava->GetBumpMap()/* ||
 		!heightMap->GetBumpMap()*/) {
 		return;
 	}
@@ -85,7 +89,8 @@ Renderer::Renderer(Window & parent) : OGLRenderer(parent) {
 	
 	waterRotate = 0;
 
-	SetTextureRepeating(quad->GetTexture(), true);
+	SetTextureRepeating(lava->GetTexture(), true);
+	SetTextureRepeating(lava->GetBumpMap(), true);
 	SetTextureRepeating(heightMap->GetTexture(), true);
 	SetTextureRepeating(heightMap->GetBumpMap(), true);
 	init = true;
@@ -105,8 +110,8 @@ Renderer::Renderer(Window & parent) : OGLRenderer(parent) {
 Renderer ::~Renderer(void) {
 	delete camera;
 	delete heightMap;
-	delete quad;
-	delete reflectShader;
+	delete lava;
+	delete lavaShader;
 	delete skyboxShader;
 	delete lightShader;
 	delete texShader;
@@ -174,11 +179,27 @@ void Renderer::RenderScene() {
 }
 
 void Renderer::DrawSkybox() {
+
 	glDepthMask(GL_FALSE);
 	SetCurrentShader(skyboxShader);
 
+	glUniform1i(glGetUniformLocation(currentShader->GetProgram(),
+		"cubeTex"), 2);
+
+	glUniform1i(glGetUniformLocation(currentShader->GetProgram(),
+		"cubeTex2"), 3);
+
+	glUniform1f(glGetUniformLocation(currentShader->GetProgram(),
+		"blendFactor"), (float)explodeCount/ 100.0f);
+
+	glActiveTexture(GL_TEXTURE2);
+	glBindTexture(GL_TEXTURE_CUBE_MAP, cubeMap);
+
+	glActiveTexture(GL_TEXTURE3);
+	glBindTexture(GL_TEXTURE_CUBE_MAP, cubeMap2);
+
 	UpdateShaderMatrices();
-	quad->Draw();
+	lava->Draw();
 
 	glUseProgram(0);
 	glDepthMask(GL_TRUE);
@@ -208,7 +229,7 @@ void Renderer::DrawHeightmap() {
 }
 
 void Renderer::DrawLava() {
-	SetCurrentShader(reflectShader);
+	SetCurrentShader(lavaShader);
 	SetShaderLight(*light);
 	glUniform3fv(glGetUniformLocation(currentShader->GetProgram(),
 		"cameraPos"), 1, (float *)& camera->GetPosition());
@@ -218,6 +239,9 @@ void Renderer::DrawLava() {
 
 	glUniform1i(glGetUniformLocation(currentShader->GetProgram(),
 		"cubeTex"), 2);
+
+	glUniform1i(glGetUniformLocation(currentShader->GetProgram(),
+		"bumpTex"), 3);
 
 	glActiveTexture(GL_TEXTURE2);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, cubeMap);
@@ -237,7 +261,7 @@ void Renderer::DrawLava() {
 		Matrix4::Translation(Vector3(0.0f, waterRotate*0.01, 1.0f));
 	UpdateShaderMatrices();
 
-	quad->Draw();
+	lava->Draw();
 
 	glUseProgram(0);
 }
@@ -335,28 +359,6 @@ void Renderer::Explode() {
 
 		emitterExplode->Draw();
 
-	}
-	//else if (explodeCount < 101) {
-	//	//fade in
-	//	SetCurrentShader(basicShader);
-	//	flash->Draw();
-	//}
-	else if (explodeCount == 100) {
-		/*cubeMap = SOIL_load_OGL_cubemap(
-		TEXTUREDIR"/box1/violentdays_lf.png", TEXTUREDIR"/box1/violentdays_rt.png",
-		TEXTUREDIR"/box1/violentdays_up.png", TEXTUREDIR"/box1/violentdays_dn.png",
-		TEXTUREDIR"/box1/violentdays_ft.png", TEXTUREDIR"/box1/violentdays_bk2.png",
-		SOIL_LOAD_RGB,
-		SOIL_CREATE_NEW_ID, 0
-		);*/
-	}
-	/*else if (explodeCount < 200) {
-		Mesh::updateColour(flash, Vector4(1,1,1, (1) ));
-		flash->Draw();
-	}*/
-	else {
-		explosion = false;
-		explodeCount = 0;
 	}
 
 	glUseProgram(0);

@@ -29,14 +29,13 @@ protected:
 
 	Shader * basicShader;
 	Shader * lightShader;
-	Shader * reflectShader;
+	Shader * lavaShader;
 	Shader * skyboxShader;
 	Shader * particleShader;
 	Shader * texShader;
 
 	HeightMap * heightMap;
-	Mesh * quad;
-	Mesh * flash;
+	Mesh * lava;
 	//OBJMesh* rock;
 
 	float waterRotate;
@@ -46,6 +45,7 @@ protected:
 
 	GLuint cubeMap;
 	GLuint cubeMap2;
+	float blend;
 
 	void	SetShaderParticleSize(float f);
 
