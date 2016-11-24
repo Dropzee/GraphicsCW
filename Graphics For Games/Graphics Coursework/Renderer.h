@@ -50,7 +50,8 @@ protected:
 
 	ParticleEmitter*	emitterBubble;
 	ParticleEmitter*	emitterExplode;
-	ParticleEmitter*	emitterSteam;
+	ParticleEmitter*	emitterSteam[100];
+	int GEYSERS = 100;
 
 	bool emit;
 

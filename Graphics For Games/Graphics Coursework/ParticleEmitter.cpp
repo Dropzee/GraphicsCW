@@ -208,6 +208,10 @@ void	ParticleEmitter::ResizeArrays() {
 	largestSize = particles.size();		//Update our largest particles size
 }
 
+void ParticleEmitter::updatePosition(Vector3 pos) {
+	position = pos;
+}
+
 /*
 Now for the overloaded Draw function. It's a little bit messy, as we have to copy all of the
 Particle data structs into one contiguous lump of memory to send using the OpenGL command

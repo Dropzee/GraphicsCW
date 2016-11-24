@@ -4,9 +4,12 @@ Renderer::Renderer(Window & parent) : OGLRenderer(parent) {
 	camera = new Camera();
 	heightMap = new HeightMap(TEXTUREDIR"terrain.raw");
 	lava = Mesh::GenerateQuad();
-	emitterBubble = new ParticleEmitter(Vector3(-1000,110,-1000), BUBBLE);
+	
+	emitterBubble = new ParticleEmitter(Vector3(9000,110,9000), BUBBLE);
 	emitterExplode = new ParticleEmitter(Vector3(0, 0, 0), EXPLOSION);
-	emitterSteam = new ParticleEmitter(Vector3(1000, 110, 1000), STEAM);
+	for (int i = 0; i < GEYSERS; i++) {
+		emitterSteam[i] = new ParticleEmitter(Vector3(9000, 110, 9000), STEAM);
+	}
 
 	camera->SetPosition(Vector3(RAW_WIDTH * HEIGHTMAP_X / 2.0f,
 		500.0f, RAW_WIDTH * HEIGHTMAP_X));
@@ -104,6 +107,8 @@ Renderer::Renderer(Window & parent) : OGLRenderer(parent) {
 	explosion = false;
 	explodeCount = 0;
 
+	GEYSERS = 5;
+
 	emit = true;
 }
 
@@ -120,13 +125,17 @@ Renderer ::~Renderer(void) {
 	delete light;
 	delete emitterBubble;
 	delete emitterExplode;
-	delete emitterSteam;
+	for (int i = 0; i < GEYSERS; i++) {
+		delete emitterSteam[i];
+	}
 	currentShader = 0;
 }
 void Renderer::UpdateScene(float msec) {
 	emitterBubble->Update(msec);
 	emitterExplode->Update(msec);
-	emitterSteam->Update(msec);
+	for (int i = 0; i < GEYSERS; i++) {
+		emitterSteam[i]->Update(msec);
+	}
 	camera->UpdateCamera(msec);
 	viewMatrix = camera->BuildViewMatrix();
 	waterRotate += msec / 1000;
@@ -153,10 +162,14 @@ void Renderer::UpdateScene(float msec) {
 		emit = !emit;
 	}
 	if (emit) {
-		emitterSteam->SetLaunchParticles(50);
+		for (int i = 0; i < GEYSERS; i++) {
+			emitterSteam[i]->SetLaunchParticles(50);
+		}
 	}
 	else {
-		emitterSteam->SetLaunchParticles(0);
+		for (int i = 0; i < GEYSERS; i++) {
+			emitterSteam[i]->SetLaunchParticles(0);
+		}
 	}
 }
 
@@ -167,7 +180,7 @@ void Renderer::RenderScene() {
 
 	
 	//DrawSkybox();
-	DrawHeightmap();
+	//DrawHeightmap();
 	//DrawLava();
 	DrawEmitter();
 
@@ -297,15 +310,18 @@ void Renderer::DrawEmitter() {
 
 	emitterBubble->Draw();
 
-	SetShaderParticleSize(emitterSteam->GetParticleSize());
-	emitterSteam->SetParticleSize(10.0f);
-	emitterSteam->SetParticleVariance(1.0f);
-	//emitterSteam->SetLaunchParticles(50.0f);
-	emitterSteam->SetParticleLifetime(3000.0f);
-	emitterSteam->SetParticleSpeed(0.1f);
-	UpdateShaderMatrices();
+	for (int i = 0; i < GEYSERS; i++) {
+		SetShaderParticleSize(emitterSteam[i]->GetParticleSize());
+		emitterSteam[i]->SetParticleSize(10.0f);
+		emitterSteam[i]->SetParticleVariance(1.0f);
+		//emitterSteam->SetLaunchParticles(50.0f);
+		emitterSteam[i]->SetParticleLifetime(3000.0f);
+		emitterSteam[i]->SetParticleSpeed(0.1f);
+		UpdateShaderMatrices();
 
-	emitterSteam->Draw();
+		emitterSteam[i]->Draw();
+
+	}
 
 	glUseProgram(0);
 

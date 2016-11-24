@@ -63,6 +63,8 @@ public:
 	ParticleEmitter(Vector3 pos, TYPE t);
 	~ParticleEmitter(void);
 
+	void updatePosition(Vector3 pos);
+
 	/*
 	To update our particle positions, we must have an update
 	function - which has a msec float, just like the other
