@@ -20,6 +20,8 @@ public:
 	void SetBumpMap(GLuint tex) { bumpTexture = tex; }
 	GLuint GetBumpMap() { return bumpTexture; }
 
+	static void updateColour(Mesh * m, Vector4 col);
+
 protected:
 	void BufferData();
 

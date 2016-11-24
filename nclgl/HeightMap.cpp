@@ -1,16 +1,19 @@
 #include "HeightMap.h"
 
 HeightMap::HeightMap(std::string name) {
+
 	std::ifstream file(name.c_str(), ios::binary);
 	if (!file) {
 		return;
 	}
+
 	numVertices = RAW_WIDTH * RAW_HEIGHT;
 	numIndices = (RAW_WIDTH - 1)*(RAW_HEIGHT - 1) * 6;
 	vertices = new Vector3[numVertices];
 	textureCoords = new Vector2[numVertices];
 	indices = new GLuint[numIndices];
 	unsigned char * data = new unsigned char[numVertices];
+
 	file.read((char *)data, numVertices * sizeof(unsigned char));
 	file.close();
 

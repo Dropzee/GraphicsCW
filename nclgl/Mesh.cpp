@@ -258,3 +258,10 @@ Vector3 Mesh::GenerateTangent(const Vector3 &a, const Vector3 &b,
 
 	return axis * factor;
 }
+
+void Mesh::updateColour(Mesh * m, Vector4 col) {
+	for (int i = 0; i < m->numVertices; i++) {
+		m->colours[i] = col;
+	}
+	m->BufferData();
+}

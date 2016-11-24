@@ -1,22 +1,9 @@
-﻿Build started 24/11/2016 12:14:21.
+﻿Build started 24/11/2016 15:05:01.
      1>Project "D:\Documents\CSC8502 - Advanced Graphics for Games\Graphics Code 2015 (CW)\GraphicsCW\nclgl\nclgl.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D GLEW_STATIC /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\nclgl.pdb" /Gd /TP /analyze- /errorReport:prompt Camera.cpp Frustum.cpp HeightMap.cpp MD5Anim.cpp MD5FileData.cpp MD5Mesh.cpp MD5Node.cpp Mesh.cpp OBJMesh.cpp OGLRenderer.cpp SceneNode.cpp Shader.cpp Window.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D GLEW_STATIC /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\nclgl.pdb" /Gd /TP /analyze- /errorReport:prompt Mesh.cpp
          Mesh.cpp
-         Generating Code...
-         Skipping... (no relevant changes detected)
-         Window.cpp
-         Shader.cpp
-         SceneNode.cpp
-         OGLRenderer.cpp
-         OBJMesh.cpp
-         MD5Node.cpp
-         MD5Mesh.cpp
-         MD5FileData.cpp
-         MD5Anim.cpp
-         HeightMap.cpp
-         Frustum.cpp
-         Camera.cpp
+     1>d:\documents\csc8502 - advanced graphics for games\graphics code 2015 (cw)\graphicscw\nclgl\mesh.cpp(263): warning C4018: '<': signed/unsigned mismatch
        Lib:
          C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\Lib.exe /OUT:"D:\Documents\CSC8502 - Advanced Graphics for Games\Graphics Code 2015 (CW)\GraphicsCW\Graphics For Games\Debug\nclgl.lib" /NOLOGO Debug\Camera.obj
          Debug\Frustum.obj
@@ -42,4 +29,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:00.95
+Time Elapsed 00:00:00.96

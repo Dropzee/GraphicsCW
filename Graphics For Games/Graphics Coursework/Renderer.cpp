@@ -15,7 +15,7 @@ Renderer::Renderer(Window & parent) : OGLRenderer(parent) {
 	light = new Light(Vector3((RAW_HEIGHT * HEIGHTMAP_X / 2.0f), 500.0f,
 		(RAW_HEIGHT * HEIGHTMAP_Z / 2.0f)),
 		Vector4(0.9f, 0.9f, 1.0f, 1),
-		(RAW_WIDTH * HEIGHTMAP_X));
+		(RAW_WIDTH * HEIGHTMAP_X * 10));
 
 	basicShader = new Shader(SHADERDIR"basicVertex.glsl",
 		SHADERDIR"colourFragment.glsl");
@@ -60,6 +60,14 @@ Renderer::Renderer(Window & parent) : OGLRenderer(parent) {
 		SOIL_CREATE_NEW_ID, 0
 		);	
 	
+	cubeMap2 = SOIL_load_OGL_cubemap(
+		TEXTUREDIR"/box1/violentdays_lf.png", TEXTUREDIR"/box1/violentdays_rt.png",
+		TEXTUREDIR"/box1/violentdays_up.png", TEXTUREDIR"/box1/violentdays_dn.png",
+		TEXTUREDIR"/box1/violentdays_ft.png", TEXTUREDIR"/box1/violentdays_bk2.png",
+		SOIL_LOAD_RGB,
+		SOIL_CREATE_NEW_ID, 0
+		);
+
 	basicFont = new Font(SOIL_load_OGL_texture(TEXTUREDIR"tahoma.tga", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_COMPRESS_TO_DXT), 16, 16);
 	prof = false;
 
@@ -129,6 +137,13 @@ void Renderer::UpdateScene(float msec) {
 	if(Window::GetKeyboard()->KeyTriggered(KEYBOARD_X) && !explosion) {
 		explosion = true;
 	}
+
+	if (explosion) {
+		Vector3 pos = camera->GetPosition();
+		camera->SetPosition(Vector3(pos.x + (rand() % 55) - 25, pos.y + (rand() % 55) - 25, pos.z + (rand() % 55) - 25));
+	}
+
+	//light->SetColour(Vector4(0, 1, 0, 1));
 }
 
 
@@ -193,15 +208,16 @@ void Renderer::DrawHeightmap() {
 }
 
 void Renderer::DrawLava() {
-	SetCurrentShader(lightShader);
+	SetCurrentShader(reflectShader);
 	SetShaderLight(*light);
 	glUniform3fv(glGetUniformLocation(currentShader->GetProgram(),
 		"cameraPos"), 1, (float *)& camera->GetPosition());
 
 	glUniform1i(glGetUniformLocation(currentShader->GetProgram(),
 		"diffuseTex"), 0);
+
 	glUniform1i(glGetUniformLocation(currentShader->GetProgram(),
-		"bumpTex"), 1);
+		"cubeTex"), 2);
 
 	glActiveTexture(GL_TEXTURE2);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, cubeMap);
@@ -318,24 +334,26 @@ void Renderer::Explode() {
 		UpdateShaderMatrices();
 
 		emitterExplode->Draw();
+
 	}
-	else if (explodeCount < 150) {
-		//fade in
-		SetCurrentShader(basicShader);
-		flash->Draw();
-	}
-	else if (explodeCount == 150) {
-		cubeMap = SOIL_load_OGL_cubemap(
+	//else if (explodeCount < 101) {
+	//	//fade in
+	//	SetCurrentShader(basicShader);
+	//	flash->Draw();
+	//}
+	else if (explodeCount == 100) {
+		/*cubeMap = SOIL_load_OGL_cubemap(
 		TEXTUREDIR"/box1/violentdays_lf.png", TEXTUREDIR"/box1/violentdays_rt.png",
 		TEXTUREDIR"/box1/violentdays_up.png", TEXTUREDIR"/box1/violentdays_dn.png",
 		TEXTUREDIR"/box1/violentdays_ft.png", TEXTUREDIR"/box1/violentdays_bk2.png",
 		SOIL_LOAD_RGB,
 		SOIL_CREATE_NEW_ID, 0
-		);
+		);*/
 	}
-	else if (explodeCount < 200) {
-		//fade out
-	}
+	/*else if (explodeCount < 200) {
+		Mesh::updateColour(flash, Vector4(1,1,1, (1) ));
+		flash->Draw();
+	}*/
 	else {
 		explosion = false;
 		explodeCount = 0;
