@@ -4,7 +4,7 @@ Renderer::Renderer(Window & parent) : OGLRenderer(parent) {
 	camera = new Camera();
 	heightMap = new HeightMap(TEXTUREDIR"terrain.raw");
 	lava = Mesh::GenerateQuad();
-	emitterBubble = new ParticleEmitter(Vector3(1000,110,1000), BUBBLE);
+	emitterBubble = new ParticleEmitter(Vector3(-1000,110,-1000), BUBBLE);
 	emitterExplode = new ParticleEmitter(Vector3(0, 0, 0), EXPLOSION);
 	emitterSteam = new ParticleEmitter(Vector3(1000, 110, 1000), STEAM);
 
@@ -70,8 +70,6 @@ Renderer::Renderer(Window & parent) : OGLRenderer(parent) {
 		SOIL_CREATE_NEW_ID, 0
 		);
 
-	blend = 0.5;
-
 	basicFont = new Font(SOIL_load_OGL_texture(TEXTUREDIR"tahoma.tga", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_COMPRESS_TO_DXT), 16, 16);
 	prof = false;
 
@@ -81,7 +79,7 @@ Renderer::Renderer(Window & parent) : OGLRenderer(parent) {
 	}
 
 	//rock = new OBJMesh(MESHDIR"/Stone Pack1_Stone_5/Stone Pack1_Stone_5.obj");
-	////OBJMesh* rock = new OBJMesh(MESHDIR"Boulder3.obj");
+	//OBJMesh* rock = new OBJMesh(MESHDIR"Boulder3.obj");
 
 	//rock->SetTexture(SOIL_load_OGL_texture(
 	//	TEXTUREDIR"lavaland.jpg", SOIL_LOAD_AUTO,
@@ -105,6 +103,8 @@ Renderer::Renderer(Window & parent) : OGLRenderer(parent) {
 
 	explosion = false;
 	explodeCount = 0;
+
+	emit = true;
 }
 
 Renderer ::~Renderer(void) {
@@ -148,7 +148,16 @@ void Renderer::UpdateScene(float msec) {
 		camera->SetPosition(Vector3(pos.x + (rand() % 55) - 25, pos.y + (rand() % 55) - 25, pos.z + (rand() % 55) - 25));
 	}
 
-	//light->SetColour(Vector4(0, 1, 0, 1));
+	int num = rand() % 250;
+	if (num <= 0) {
+		emit = !emit;
+	}
+	if (emit) {
+		emitterSteam->SetLaunchParticles(50);
+	}
+	else {
+		emitterSteam->SetLaunchParticles(0);
+	}
 }
 
 
@@ -254,11 +263,11 @@ void Renderer::DrawLava() {
 
 	modelMatrix =
 		Matrix4::Translation(Vector3(heightX, heightY, heightZ)) *
-		Matrix4::Scale(Vector3(heightX, 1, heightZ)) *
+		Matrix4::Scale(Vector3(heightX * 10, 1, heightZ * 10)) *
 		Matrix4::Rotation(90, Vector3(1.0f, 0.0f, 0.0f));
 
-	textureMatrix = Matrix4::Scale(Vector3(10.0f, 10.0f, 10.0f)) *
-		Matrix4::Translation(Vector3(0.0f, waterRotate*0.01, 1.0f));
+	textureMatrix = Matrix4::Scale(Vector3(100.0f, 100.0f, 100.0f)) *
+		Matrix4::Translation(Vector3(0.0f, waterRotate*0.001, 1.0f));
 	UpdateShaderMatrices();
 
 	lava->Draw();
@@ -281,12 +290,22 @@ void Renderer::DrawEmitter() {
 	SetShaderParticleSize(emitterBubble->GetParticleSize());
 	emitterBubble->SetParticleSize(10.0f);
 	emitterBubble->SetParticleVariance(1.0f);
-	emitterBubble->SetLaunchParticles(100.0f);
+	emitterBubble->SetLaunchParticles(200.0f);
 	emitterBubble->SetParticleLifetime(2000.0f);
 	emitterBubble->SetParticleSpeed(0.05f);
 	UpdateShaderMatrices();
 
 	emitterBubble->Draw();
+
+	SetShaderParticleSize(emitterSteam->GetParticleSize());
+	emitterSteam->SetParticleSize(10.0f);
+	emitterSteam->SetParticleVariance(1.0f);
+	//emitterSteam->SetLaunchParticles(50.0f);
+	emitterSteam->SetParticleLifetime(3000.0f);
+	emitterSteam->SetParticleSpeed(0.1f);
+	UpdateShaderMatrices();
+
+	emitterSteam->Draw();
 
 	glUseProgram(0);
 
@@ -316,29 +335,22 @@ void Renderer::SetShaderParticleSize(float f) {
 }
 
 void Renderer::DrawText(const std::string &text, const Vector3 &position, const float size, const bool perspective) {
-	//Create a new temporary TextMesh, using our line of text and our font
 	TextMesh* mesh = new TextMesh(text, *basicFont);
 
-	//This just does simple matrix setup to render in either perspective or
-	//orthographic mode, there's nothing here that's particularly tricky.
 	if (perspective) {
 		modelMatrix = Matrix4::Translation(position) * Matrix4::Scale(Vector3(size, size, 1));
 		viewMatrix = camera->BuildViewMatrix();
 		projMatrix = Matrix4::Perspective(1.0f, 10000.0f, (float)width / (float)height, 45.0f);
 	}
 	else {
-		//In ortho mode, we subtract the y from the height, so that a height of 0
-		//is at the top left of the screen, which is more intuitive
-		//(for me anyway...)
 		modelMatrix = Matrix4::Translation(Vector3(position.x, height - position.y, position.z)) * Matrix4::Scale(Vector3(size, size, 1));
 		viewMatrix.ToIdentity();
 		projMatrix = Matrix4::Orthographic(-1.0f, 1.0f, (float)width, 0.0f, (float)height, 0.0f);
 	}
-	//Either way, we update the matrices, and draw the mesh
 	UpdateShaderMatrices();
 	mesh->Draw();
 
-	delete mesh; //Once it's drawn, we don't need it anymore!
+	delete mesh;
 }
 
 void Renderer::Explode() {
@@ -359,6 +371,9 @@ void Renderer::Explode() {
 
 		emitterExplode->Draw();
 
+	}
+	else {
+		explosion = false;
 	}
 
 	glUseProgram(0);

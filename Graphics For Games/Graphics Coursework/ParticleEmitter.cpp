@@ -143,7 +143,7 @@ Particle* ParticleEmitter::GetFreeParticle() {
 		p->direction.y += 1;
 		p->direction.z += ((RAND() - RAND()) * particleVariance);
 		p->direction.Normalise();	//Keep its direction normalised!
-		p->position = position + Vector3((rand() % 5001) - 2500, 0, (rand() % 5001) - 2500);
+		p->position = position + Vector3((rand() % 20001) - 10000, 0, (rand() % 20001) - 10000);
 	}
 	if (emit == EXPLOSION) {
 		int colours[3] = {0 , 128, 255};
@@ -156,13 +156,14 @@ Particle* ParticleEmitter::GetFreeParticle() {
 		p->position.ToZero(); //= position;
 	}
 	if (emit == STEAM) {
-		p->colour = Vector4(0.8, 0.4, 0, 1.0);
+		float num = rand() % 128 + 64;
+		p->colour = Vector4(num / 255.0f, num / 255.0f, num / 255.0f, 1.0);
 		p->direction = initialDirection;
-		p->direction.x += ((RAND() - RAND()) * particleVariance);
+		p->direction.x += ((RAND() - RAND()) * particleVariance / 5);
 		p->direction.y += 1;
-		p->direction.z += ((RAND() - RAND()) * particleVariance);
+		p->direction.z += ((RAND() - RAND()) * particleVariance / 5);
 		p->direction.Normalise();	//Keep its direction normalised!
-		p->position = position + Vector3((rand() % 5001) - 2500, 0, (rand() % 5001) - 2500);
+		p->position = position + Vector3((rand() % 20) - 10, 0, (rand() % 20) - 10);;
 	}
 	
 

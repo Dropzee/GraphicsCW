@@ -36,7 +36,7 @@ protected:
 
 	HeightMap * heightMap;
 	Mesh * lava;
-	//OBJMesh* rock;
+	OBJMesh* rock;
 
 	float waterRotate;
 
@@ -45,13 +45,14 @@ protected:
 
 	GLuint cubeMap;
 	GLuint cubeMap2;
-	float blend;
 
 	void	SetShaderParticleSize(float f);
 
 	ParticleEmitter*	emitterBubble;
 	ParticleEmitter*	emitterExplode;
 	ParticleEmitter*	emitterSteam;
+
+	bool emit;
 
 	bool explosion;
 	int explodeCount;
