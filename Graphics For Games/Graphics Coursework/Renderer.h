@@ -51,9 +51,9 @@ protected:
 	ParticleEmitter*	emitterBubble;
 	ParticleEmitter*	emitterExplode;
 	ParticleEmitter*	emitterSteam[100];
-	int GEYSERS = 100;
-
-	bool emit;
+	int GEYSERS = 5;
+	bool move[5];
+	bool emit[5];
 
 	bool explosion;
 	int explodeCount;

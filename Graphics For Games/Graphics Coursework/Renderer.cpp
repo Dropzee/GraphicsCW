@@ -107,9 +107,12 @@ Renderer::Renderer(Window & parent) : OGLRenderer(parent) {
 	explosion = false;
 	explodeCount = 0;
 
-	GEYSERS = 5;
+	for (int i = 0; i < GEYSERS; i++) {
+		move[i] = false;
+		emit[i] = true;
+	}
 
-	emit = true;
+	
 }
 
 Renderer ::~Renderer(void) {
@@ -148,7 +151,7 @@ void Renderer::UpdateScene(float msec) {
 		prof = !prof;
 	}
 
-	if(Window::GetKeyboard()->KeyTriggered(KEYBOARD_X) && !explosion) {
+	if (Window::GetKeyboard()->KeyTriggered(KEYBOARD_X) && !explosion) {
 		explosion = true;
 	}
 
@@ -157,18 +160,22 @@ void Renderer::UpdateScene(float msec) {
 		camera->SetPosition(Vector3(pos.x + (rand() % 55) - 25, pos.y + (rand() % 55) - 25, pos.z + (rand() % 55) - 25));
 	}
 
-	int num = rand() % 250;
-	if (num <= 0) {
-		emit = !emit;
-	}
-	if (emit) {
-		for (int i = 0; i < GEYSERS; i++) {
-			emitterSteam[i]->SetLaunchParticles(50);
+	for (int i = 0; i < GEYSERS; i++) {
+		int num = rand() % 250;
+		if (num <= 0) {
+			emit[i] = !emit[i];
 		}
-	}
-	else {
-		for (int i = 0; i < GEYSERS; i++) {
+		if (emit[i]) {
+			if (move[i]) {
+				emitterSteam[i]->updatePosition(Vector3(9000 + (rand() % 9000) - 4500, 110, 9000 + (rand() % 9000) - 4500));
+			}
+			emitterSteam[i]->SetLaunchParticles(50);
+			move[i] = false;
+		}
+
+		else {
 			emitterSteam[i]->SetLaunchParticles(0);
+			move[i] = true;
 		}
 	}
 }
