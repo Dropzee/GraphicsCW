@@ -5,9 +5,10 @@
 #include <fstream>
 
 #include "Mesh.h"
+#include "Perlin.h"
 
-#define RAW_WIDTH 257
-#define RAW_HEIGHT 257
+#define RAW_WIDTH 1000
+#define RAW_HEIGHT 1000
 
 #define HEIGHTMAP_X 16.0f
 #define HEIGHTMAP_Z 16.0f

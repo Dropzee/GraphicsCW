@@ -1,30 +1,8 @@
-﻿Build started 24/11/2016 17:02:45.
-     1>Project "D:\Documents\CSC8502 - Advanced Graphics for Games\Graphics Code 2015 (CW)\GraphicsCW\nclgl\nclgl.vcxproj" on node 2 (Rebuild target(s)).
+﻿Build started 24/11/2016 18:51:23.
+     1>Project "D:\Documents\CSC8502 - Advanced Graphics for Games\Graphics Code 2015 (CW)\GraphicsCW\nclgl\nclgl.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D CODE_ANALYSIS /D GLEW_STATIC /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\nclgl.pdb" /Gd /TP /analyze /analyze:plugin"C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\\bin\localespc.dll" /errorReport:prompt   /analyze:quiet Camera.cpp Frustum.cpp GameTimer.cpp HeightMap.cpp Keyboard.cpp Matrix4.cpp MD5Anim.cpp MD5FileData.cpp MD5Mesh.cpp MD5Node.cpp Mesh.cpp Mouse.cpp OBJMesh.cpp OGLRenderer.cpp Plane.cpp Quaternion.cpp SceneNode.cpp Shader.cpp Window.cpp
-         Window.cpp
-         Shader.cpp
-         SceneNode.cpp
-         Quaternion.cpp
-         Plane.cpp
-         OGLRenderer.cpp
-         OBJMesh.cpp
-         Mouse.cpp
-         Mesh.cpp
-     1>d:\documents\csc8502 - advanced graphics for games\graphics code 2015 (cw)\graphicscw\nclgl\mesh.cpp(263): warning C4018: '<': signed/unsigned mismatch
-         MD5Node.cpp
-         MD5Mesh.cpp
-         MD5FileData.cpp
-         MD5Anim.cpp
-         Matrix4.cpp
-         Keyboard.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D GLEW_STATIC /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\nclgl.pdb" /Gd /TP /analyze- /errorReport:prompt HeightMap.cpp
          HeightMap.cpp
-         GameTimer.cpp
-         Frustum.cpp
-         Camera.cpp
-     1>d:\documents\csc8502 - advanced graphics for games\graphics code 2015 (cw)\graphicscw\nclgl\camera.h(61): warning C4305: 'initializing': truncation from 'double' to 'const float'
-         Running Code Analysis for C/C++...
-         Generating Code...
        Lib:
          C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\Lib.exe /OUT:"D:\Documents\CSC8502 - Advanced Graphics for Games\Graphics Code 2015 (CW)\GraphicsCW\Graphics For Games\Debug\nclgl.lib" /NOLOGO Debug\Camera.obj
          Debug\Frustum.obj
@@ -40,19 +18,15 @@
          Debug\Mouse.obj
          Debug\OBJMesh.obj
          Debug\OGLRenderer.obj
+         Debug\Perlin.obj
          Debug\Plane.obj
          Debug\Quaternion.obj
          Debug\SceneNode.obj
          Debug\Shader.obj
          Debug\Window.obj
          nclgl.vcxproj -> D:\Documents\CSC8502 - Advanced Graphics for Games\Graphics Code 2015 (CW)\GraphicsCW\Graphics For Games\Debug\nclgl.lib
-     1>d:\documents\csc8502 - advanced graphics for games\graphics code 2015 (cw)\graphicscw\nclgl\heightmap.cpp(32): warning C6283: 'data' is allocated with array new [], but deleted with scalar delete.
-     1>d:\documents\csc8502 - advanced graphics for games\graphics code 2015 (cw)\graphicscw\nclgl\keyboard.cpp(75): warning C6386: Buffer overrun while writing to 'this->keyStates':  the writable size is '255' bytes, but 'key' bytes might be written.
-     1>d:\documents\csc8502 - advanced graphics for games\graphics code 2015 (cw)\graphicscw\nclgl\md5filedata.cpp(526): warning C6386: Buffer overrun while writing to 'target->indices':  the writable size is 'target->numIndices*4' bytes, but '16' bytes might be written.
-     1>d:\documents\csc8502 - advanced graphics for games\graphics code 2015 (cw)\graphicscw\nclgl\window.cpp(195): warning C6283: 'lpb' is allocated with array new [], but deleted with scalar delete.
-     1>d:\documents\csc8502 - advanced graphics for games\graphics code 2015 (cw)\graphicscw\nclgl\window.cpp(181): warning C6001: Using uninitialized memory 'dwSize'.
-     1>Done Building Project "D:\Documents\CSC8502 - Advanced Graphics for Games\Graphics Code 2015 (CW)\GraphicsCW\nclgl\nclgl.vcxproj" (Rebuild target(s)).
+     1>Done Building Project "D:\Documents\CSC8502 - Advanced Graphics for Games\Graphics Code 2015 (CW)\GraphicsCW\nclgl\nclgl.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:01:17.29
+Time Elapsed 00:00:00.96
