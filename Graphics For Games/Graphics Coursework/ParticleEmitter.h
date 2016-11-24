@@ -52,9 +52,15 @@ struct Particle {
 	Vector3 direction;
 };
 
+enum TYPE {
+	BUBBLE,
+	EXPLOSION,
+	STEAM
+};
+
 class ParticleEmitter : public Mesh {
 public:
-	ParticleEmitter(Vector3 pos);
+	ParticleEmitter(Vector3 pos, TYPE t);
 	~ParticleEmitter(void);
 
 	/*
@@ -117,6 +123,8 @@ protected:
 	this function will return that, otherwise it'll return a 'new' one
 	*/
 	Particle* GetFreeParticle();
+
+	TYPE emit;
 
 	/*
 	Resizes our vertex buffers

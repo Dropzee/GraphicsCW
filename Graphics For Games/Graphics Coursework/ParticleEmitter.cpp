@@ -11,7 +11,7 @@
 /*
 Constructor, which sets everything to some 'sensible' defaults.
 */
-ParticleEmitter::ParticleEmitter(Vector3 pos) {
+ParticleEmitter::ParticleEmitter(Vector3 pos, TYPE t) {
 	particleRate = 100.0f;
 	particleLifetime = 500.0f;
 	particleSize = 24.0f;
@@ -21,6 +21,7 @@ ParticleEmitter::ParticleEmitter(Vector3 pos) {
 	numLaunchParticles = 10;
 	largestSize = 0;
 	position = pos;
+	emit = t;
 
 	/*
 	Each particle is a white dot, which has an alpha fade on it,
@@ -92,7 +93,9 @@ void ParticleEmitter::Update(float msec) {
 			//position by multiplying its normalised direction by the
 			//particle speed, and adding the result to the position. Easy!
 
-			p->direction.y -= 0.05;
+			if (emit == BUBBLE) {
+				p->direction.y -= 0.05;
+			}
 
 			p->position += p->direction*(msec*particleSpeed);
 
@@ -131,16 +134,37 @@ Particle* ParticleEmitter::GetFreeParticle() {
 	//free list, it'll still have the values of its 'previous life'
 
 	//p->colour = Vector4(RAND(), RAND(), RAND(), 1.0);
-	p->colour = Vector4(0.8, 0.4, 0, 1.0);
-	p->direction = initialDirection;
-	p->direction.x += ((RAND() - RAND()) * particleVariance);
-	p->direction.y += 1;
-	p->direction.z += ((RAND() - RAND()) * particleVariance);
-
-	p->direction.Normalise();	//Keep its direction normalised!
-	
 	//p->position.ToZero();
-	p->position = position + Vector3((rand() % 5001)-2500, 0, (rand() % 5001)-2500);
+
+	if (emit == BUBBLE) {
+		p->colour = Vector4(0.8, 0.4, 0, 1.0);
+		p->direction = initialDirection;
+		p->direction.x += ((RAND() - RAND()) * particleVariance);
+		p->direction.y += 1;
+		p->direction.z += ((RAND() - RAND()) * particleVariance);
+		p->direction.Normalise();	//Keep its direction normalised!
+		p->position = position + Vector3((rand() % 5001) - 2500, 0, (rand() % 5001) - 2500);
+	}
+	if (emit == EXPLOSION) {
+		int colours[3] = {0 , 128, 255};
+		p->colour = Vector4(255, colours[rand() % 3 + 1], 0, 1.0);
+		p->direction = initialDirection;
+		p->direction.x += 0;
+		p->direction.y += 0;
+		p->direction.z += 0;
+		p->direction.Normalise();	//Keep its direction normalised!
+		p->position.ToZero(); //= position;
+	}
+	if (emit == STEAM) {
+		p->colour = Vector4(0.8, 0.4, 0, 1.0);
+		p->direction = initialDirection;
+		p->direction.x += ((RAND() - RAND()) * particleVariance);
+		p->direction.y += 1;
+		p->direction.z += ((RAND() - RAND()) * particleVariance);
+		p->direction.Normalise();	//Keep its direction normalised!
+		p->position = position + Vector3((rand() % 5001) - 2500, 0, (rand() % 5001) - 2500);
+	}
+	
 
 	return p;	//return the new particle :-)
 }

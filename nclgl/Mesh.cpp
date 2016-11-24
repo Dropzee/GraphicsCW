@@ -95,7 +95,6 @@ Mesh * Mesh::GenerateQuad() {
 	return m;
 }
 
-
 void Mesh::BufferData() {
 	glBindVertexArray(arrayObject);
 	glGenBuffers(1, &bufferObject[VERTEX_BUFFER]);

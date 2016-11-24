@@ -27,6 +27,7 @@ protected:
 	void Profile();
 	void Explode();
 
+	Shader * basicShader;
 	Shader * lightShader;
 	Shader * reflectShader;
 	Shader * skyboxShader;
@@ -35,6 +36,7 @@ protected:
 
 	HeightMap * heightMap;
 	Mesh * quad;
+	Mesh * flash;
 	//OBJMesh* rock;
 
 	float waterRotate;
@@ -46,9 +48,12 @@ protected:
 
 	void	SetShaderParticleSize(float f);
 
-	ParticleEmitter*	emitter;
+	ParticleEmitter*	emitterBubble;
+	ParticleEmitter*	emitterExplode;
+	ParticleEmitter*	emitterSteam;
 
 	bool explosion;
+	int explodeCount;
 
 	bool prof;
 	Font*	basicFont;
