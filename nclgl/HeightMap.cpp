@@ -1,6 +1,6 @@
 #include "HeightMap.h"
 
-HeightMap::HeightMap(std::string name) {
+HeightMap::HeightMap() {
 
 	numVertices = RAW_WIDTH * RAW_HEIGHT;
 	numIndices = (RAW_WIDTH - 1)*(RAW_HEIGHT - 1) * 6;
