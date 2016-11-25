@@ -4,7 +4,7 @@
 #include "Renderer.h"
 
 int main() {
-	Window w("Graphics CW!", 1600, 1200, false);
+	Window w("Graphics CW!", 800, 600, false);
 	if (!w.HasInitialised()) {
 		return -1;
 	}
