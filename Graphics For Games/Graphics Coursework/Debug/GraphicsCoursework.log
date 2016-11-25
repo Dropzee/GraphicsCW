@@ -1,12 +1,7 @@
 ﻿  Renderer.cpp
 c:\users\jackc\documents\uni\year 4\csc8502 - advanced graphics for games\cw\graphicscw\nclgl\camera.h(61): warning C4305: 'initializing': truncation from 'double' to 'const float'
-c:\users\jackc\documents\uni\year 4\csc8502 - advanced graphics for games\cw\graphicscw\graphics for games\graphics coursework\renderer.cpp(170): warning C4244: 'argument': conversion from 'int' to 'const float', possible loss of data
-c:\users\jackc\documents\uni\year 4\csc8502 - advanced graphics for games\cw\graphicscw\graphics for games\graphics coursework\renderer.cpp(290): warning C4244: 'argument': conversion from 'double' to 'const float', possible loss of data
-c:\users\jackc\documents\uni\year 4\csc8502 - advanced graphics for games\cw\graphicscw\graphics for games\graphics coursework\renderer.cpp(313): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-  Generating Code...
-  Compiling...
-  Main.cpp
-c:\users\jackc\documents\uni\year 4\csc8502 - advanced graphics for games\cw\graphicscw\nclgl\camera.h(61): warning C4305: 'initializing': truncation from 'double' to 'const float'
-  Generating Code...
+c:\users\jackc\documents\uni\year 4\csc8502 - advanced graphics for games\cw\graphicscw\graphics for games\graphics coursework\renderer.cpp(177): warning C4244: 'argument': conversion from 'int' to 'const float', possible loss of data
+c:\users\jackc\documents\uni\year 4\csc8502 - advanced graphics for games\cw\graphicscw\graphics for games\graphics coursework\renderer.cpp(297): warning C4244: 'argument': conversion from 'double' to 'const float', possible loss of data
+c:\users\jackc\documents\uni\year 4\csc8502 - advanced graphics for games\cw\graphicscw\graphics for games\graphics coursework\renderer.cpp(320): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
   GraphicsCoursework.vcxproj -> C:\Users\jackc\Documents\Uni\Year 4\CSC8502 - Advanced Graphics for Games\CW\GraphicsCW\Graphics For Games\Debug\GraphicsCoursework.exe
   GraphicsCoursework.vcxproj -> C:\Users\jackc\Documents\Uni\Year 4\CSC8502 - Advanced Graphics for Games\CW\GraphicsCW\Graphics For Games\Debug\GraphicsCoursework.pdb (Full PDB)

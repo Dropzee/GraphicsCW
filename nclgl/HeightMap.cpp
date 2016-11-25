@@ -8,7 +8,7 @@ HeightMap::HeightMap(std::string name) {
 	textureCoords = new Vector2[numVertices];
 	indices = new GLuint[numIndices];
 
-	Perlin * noise = new Perlin(6, 6, 2, 76); //octaves, noise freq, amplitude, seed
+	noise = new Perlin(6, 6, 2, 76); //octaves, noise freq, amplitude, seed
 
 	for (int x = 0; x < RAW_WIDTH; ++x) {
 		for (int z = 0; z < RAW_HEIGHT; ++z) {
@@ -47,4 +47,9 @@ HeightMap::HeightMap(std::string name) {
 	GenerateTangents();
 
 	BufferData();
+}
+
+float HeightMap::pollMap(int x, int z) {
+	float yVal = (noise->Get((float)x / RAW_WIDTH, (float)z / RAW_HEIGHT)) * (RAW_HEIGHT / 2);
+	return yVal;
 }

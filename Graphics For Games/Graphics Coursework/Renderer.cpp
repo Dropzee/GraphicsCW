@@ -167,7 +167,14 @@ void Renderer::UpdateScene(float msec) {
 		}
 		if (emit[i]) {
 			if (move[i]) {
-				emitterSteam[i]->updatePosition(Vector3(9000 + (rand() % 9000) - 4500, 110, 9000 + (rand() % 9000) - 4500));
+				int x, z;
+				float y = 0;
+				while (y < 110) {
+					x = 9000 + (rand() % 9000) - 4500;
+					z = 9000 + (rand() % 9000) - 4500;
+					y = heightMap->pollMap(x, z);
+				}
+				emitterSteam[i]->updatePosition(Vector3(x, y, z));
 			}
 			emitterSteam[i]->SetLaunchParticles(50);
 			move[i] = false;
@@ -186,9 +193,9 @@ void Renderer::RenderScene() {
 	glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 
 	
-	//DrawSkybox();
-	//DrawHeightmap();
-	//DrawLava();
+	DrawSkybox();
+	DrawHeightmap();
+	DrawLava();
 	DrawEmitter();
 
 	if (explosion) {
@@ -312,7 +319,7 @@ void Renderer::DrawEmitter() {
 	emitterBubble->SetParticleVariance(1.0f);
 	emitterBubble->SetLaunchParticles(200.0f);
 	emitterBubble->SetParticleLifetime(2000.0f);
-	emitterBubble->SetParticleSpeed(0.05f);
+	emitterBubble->SetParticleSpeed(0.1f);
 	UpdateShaderMatrices();
 
 	emitterBubble->Draw();
