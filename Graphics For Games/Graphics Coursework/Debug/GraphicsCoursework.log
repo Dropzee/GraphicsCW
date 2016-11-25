@@ -1,23 +1,4 @@
-﻿  Renderer.cpp
+﻿  Main.cpp
 c:\users\jackc\documents\uni\year 4\csc8502 - advanced graphics for games\cw\graphicscw\nclgl\camera.h(61): warning C4305: 'initializing': truncation from 'double' to 'const float'
-c:\users\jackc\documents\uni\year 4\csc8502 - advanced graphics for games\cw\graphicscw\graphics for games\graphics coursework\renderer.cpp(191): warning C4244: 'argument': conversion from 'int' to 'const float', possible loss of data
-c:\users\jackc\documents\uni\year 4\csc8502 - advanced graphics for games\cw\graphicscw\graphics for games\graphics coursework\renderer.cpp(314): warning C4244: 'argument': conversion from 'double' to 'const float', possible loss of data
-c:\users\jackc\documents\uni\year 4\csc8502 - advanced graphics for games\cw\graphicscw\graphics for games\graphics coursework\renderer.cpp(337): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-ParticleEmitter.obj : warning LNK4049: locally defined symbol ___glewActiveTexture imported
-Renderer.obj : warning LNK4049: locally defined symbol ___glewActiveTexture imported
-ParticleEmitter.obj : warning LNK4049: locally defined symbol ___glewBindBuffer imported
-ParticleEmitter.obj : warning LNK4049: locally defined symbol ___glewBufferData imported
-ParticleEmitter.obj : warning LNK4049: locally defined symbol ___glewBufferSubData imported
-ParticleEmitter.obj : warning LNK4049: locally defined symbol ___glewDeleteBuffers imported
-ParticleEmitter.obj : warning LNK4049: locally defined symbol ___glewGenBuffers imported
-ParticleEmitter.obj : warning LNK4049: locally defined symbol ___glewEnableVertexAttribArray imported
-ParticleEmitter.obj : warning LNK4049: locally defined symbol ___glewVertexAttribPointer imported
-ParticleEmitter.obj : warning LNK4049: locally defined symbol ___glewBindVertexArray imported
-Renderer.obj : warning LNK4049: locally defined symbol ___glewGetUniformLocation imported
-Renderer.obj : warning LNK4049: locally defined symbol ___glewUniform1f imported
-Renderer.obj : warning LNK4049: locally defined symbol ___glewUniform1i imported
-Renderer.obj : warning LNK4049: locally defined symbol ___glewUniform3fv imported
-Renderer.obj : warning LNK4049: locally defined symbol ___glewUseProgram imported
-glew32.lib(glew.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'glew32.lib(glew.obj)' or at 'C:\Users\jackc\Documents\Uni\Year 4\CSC8502 - Advanced Graphics for Games\CW\GraphicsCW\Graphics For Games\Debug\vc120.pdb'; linking object as if no debug info
   GraphicsCoursework.vcxproj -> C:\Users\jackc\Documents\Uni\Year 4\CSC8502 - Advanced Graphics for Games\CW\GraphicsCW\Graphics For Games\Debug\GraphicsCoursework.exe
   GraphicsCoursework.vcxproj -> C:\Users\jackc\Documents\Uni\Year 4\CSC8502 - Advanced Graphics for Games\CW\GraphicsCW\Graphics For Games\Debug\GraphicsCoursework.pdb (Full PDB)
